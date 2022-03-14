@@ -10,9 +10,9 @@ UProceduralMeshTestComponent::UProceduralMeshTestComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
-	CustomMesh = CreateDefaultSubobject<UProceduralMeshComponent>("CustomMesh");
-	this->GetOwner()->SetRootComponent(CustomMesh);
-	CustomMesh->bUseAsyncCooking = true;
+	customMesh = CreateDefaultSubobject<UProceduralMeshComponent>("CustomMesh");
+	// this->GetOwner()->SetRootComponent(customMesh);
+	// customMesh->bUseAsyncCooking = true;
 }
 
 
@@ -36,6 +36,8 @@ void UProceduralMeshTestComponent::AddTriangle(int32 V1, int32 V2, int32 V3)
 // Generate a procedural cube.
 void UProceduralMeshTestComponent::GenerateCubeMesh()
 {
+	if (nullptr == customMesh) return;
+
 	// Relative locations.
 	vertices.Add(FVector(0, -100, 0));		// Lower left:  0
 	vertices.Add(FVector(0, -100, 100));	// Upper left:  1
@@ -83,7 +85,7 @@ void UProceduralMeshTestComponent::GenerateCubeMesh()
 
 	// This is the very magical function. No normals or tangents were generated.
 	// (I think those get auto-generated based on clockwise ordering)
-	CustomMesh->CreateMeshSection_LinearColor(
+	customMesh->CreateMeshSection_LinearColor(
 		0, vertices, triangles, TArray<FVector>(), TArray<FVector2D>(), 
 		vertexColors, TArray<FProcMeshTangent>(), true
 	);

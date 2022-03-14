@@ -21,7 +21,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	UProceduralMeshComponent* CustomMesh;
+	UProceduralMeshComponent* customMesh;
 	
 	// Mesh data:
 	TArray<FVector> vertices;
