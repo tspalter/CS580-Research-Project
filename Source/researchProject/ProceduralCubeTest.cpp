@@ -1,23 +1,20 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "ProceduralMeshTestComponent.h"
+#include "ProceduralCubeTest.h"
 
-// Sets default values for this component's properties
-UProceduralMeshTestComponent::UProceduralMeshTestComponent()
+// Sets default values
+AProceduralCubeTest::AProceduralCubeTest()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
-
+ 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	PrimaryActorTick.bCanEverTick = true;
 	customMesh = CreateDefaultSubobject<UProceduralMeshComponent>("CustomMesh");
-	// this->GetOwner()->SetRootComponent(customMesh);
-	// customMesh->bUseAsyncCooking = true;
+	SetRootComponent(customMesh);
+	customMesh->bUseAsyncCooking = true;
 }
 
-
-// Called when the game starts
-void UProceduralMeshTestComponent::BeginPlay()
+// Called when the game starts or when spawned
+void AProceduralCubeTest::BeginPlay()
 {
 	Super::BeginPlay();
 	GenerateCubeMesh();
@@ -25,7 +22,7 @@ void UProceduralMeshTestComponent::BeginPlay()
 
 
 // Function to create a triangle.
-void UProceduralMeshTestComponent::AddTriangle(int32 V1, int32 V2, int32 V3)
+void AProceduralCubeTest::AddTriangle(int32 V1, int32 V2, int32 V3)
 {
 	triangles.Add(V1);
 	triangles.Add(V2);
@@ -34,7 +31,7 @@ void UProceduralMeshTestComponent::AddTriangle(int32 V1, int32 V2, int32 V3)
 
 
 // Generate a procedural cube.
-void UProceduralMeshTestComponent::GenerateCubeMesh()
+void AProceduralCubeTest::GenerateCubeMesh()
 {
 	if (nullptr == customMesh) return;
 
@@ -86,16 +83,15 @@ void UProceduralMeshTestComponent::GenerateCubeMesh()
 	// This is the very magical function. No normals or tangents were generated.
 	// (I think those get auto-generated based on clockwise ordering)
 	customMesh->CreateMeshSection_LinearColor(
-		0, vertices, triangles, TArray<FVector>(), TArray<FVector2D>(), 
+		0, vertices, triangles, TArray<FVector>(), TArray<FVector2D>(),
 		vertexColors, TArray<FProcMeshTangent>(), true
 	);
 }
 
 // Called every frame
-void UProceduralMeshTestComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void AProceduralCubeTest::Tick(float DeltaTime)
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	Super::Tick(DeltaTime);
 
-	// ...
 }
 

@@ -3,26 +3,26 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/ActorComponent.h"
+#include "GameFramework/Actor.h"
 #include "ProceduralMeshComponent.h"
-#include "ProceduralMeshTestComponent.generated.h"
+#include "ProceduralCubeTest.generated.h"
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class RESEARCHPROJECT_API UProceduralMeshTestComponent : public UActorComponent
+UCLASS()
+class RESEARCHPROJECT_API AProceduralCubeTest : public AActor
 {
 	GENERATED_BODY()
-
+	
 public:	
-	// Sets default values for this component's properties
-	UProceduralMeshTestComponent();
+	// Sets default values for this actor's properties
+	AProceduralCubeTest();
 
 protected:
-	// Called when the game starts
+	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	UProceduralMeshComponent* customMesh;
-	
+		UProceduralMeshComponent* customMesh;
+
 	// Mesh data:
 	TArray<FVector> vertices;
 	TArray<int32> triangles;
@@ -35,7 +35,6 @@ protected:
 
 public:	
 	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	virtual void Tick(float DeltaTime) override;
 
-		
 };
